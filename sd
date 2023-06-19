@@ -1,0 +1,25 @@
+
+-(NSWindow *)fullWindow
+{
+    if (!_fullWindow) {
+        
+        _fullWindow = [[NSWindow alloc]initWithContentRect:NSScreen.mainScreen.frame styleMask:NSWindowStyleMaskFullScreen backing:NSBackingStoreBuffered defer:YES];
+        _fullWindow.opaque = NO;
+        _fullWindow.hasShadow = YES;
+        [_fullWindow setMovableByWindowBackground:NO];
+        _fullWindow.backgroundColor = [NSColor colorWithWhite:1 alpha:0.9];
+        _fullWindow.level = NSScreenSaverWindowLevel;
+        _fullWindow.titlebarAppearsTransparent=YES;
+        _fullWindow.titleVisibility = NSWindowTitleHidden;
+        [_fullWindow setStyleMask:[_fullWindow styleMask] | NSWindowStyleMaskNonactivatingPanel | NSWindowStyleMaskBorderless];
+        _fullWindow.animationBehavior = CGWindowLevelForKey(NSMainMenuWindowLevel);
+        _fullWindow.collectionBehavior = NSWindowCollectionBehaviorFullScreenAuxiliary | NSWindowCollectionBehaviorCanJoinAllSpaces;
+        if (@available(macOS 10.14, *)) {
+            _fullWindow.appearance  = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+                } else {
+                    // Fallback on earlier versions
+                }
+
+    }
+    return _fullWindow;
+}
