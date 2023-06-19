@@ -1,0 +1,44 @@
+
+-(NSWindow *)fullWindow
+{
+    if (!_fullWindow) {
+        
+        _fullWindow = [[NSWindow alloc]initWithContentRect:NSScreen.mainScreen.frame styleMask:NSWindowStyleMaskFullScreen backing:NSBackingStoreBuffered defer:YES];
+        _fullWindow.opaque = NO;
+        _fullWindow.hasShadow = YES;
+        [_fullWindow setMovableByWindowBackground:NO];
+        _fullWindow.backgroundColor = [NSColor colorWithWhite:1 alpha:0.9];
+        _fullWindow.level = NSScreenSaverWindowLevel;
+        _fullWindow.titlebarAppearsTransparent=YES;
+        _fullWindow.titleVisibility = NSWindowTitleHidden;
+        [_fullWindow setStyleMask:[_fullWindow styleMask] | NSWindowStyleMaskNonactivatingPanel | NSWindowStyleMaskBorderless];
+        _fullWindow.animationBehavior = CGWindowLevelForKey(NSMainMenuWindowLevel);
+        _fullWindow.collectionBehavior = NSWindowCollectionBehaviorFullScreenAuxiliary | NSWindowCollectionBehaviorCanJoinAllSpaces;
+        if (@available(macOS 10.14, *)) {
+            _fullWindow.appearance  = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+                } else {
+                    // Fallback on earlier versions
+                }
+
+    }
+    return _fullWindow;
+}
+
+-(NSTextField *)promptLabel
+{
+    if (!_promptLabel) {
+        _promptLabel = [[NSTextField alloc] init];
+        _promptLabel.frame = CGRectMake(NSScreen.mainScreen.frame.size.width/2 - 200, NSScreen.mainScreen.frame.size.height/2 + 42, 400, 112);
+        _promptLabel.stringValue = @"您已工作2小时啦\n请眺望远方";
+        _promptLabel.editable = NO;//设置是否可以编辑
+        _promptLabel.bordered = NO; //不显示边框
+        _promptLabel.backgroundColor = [NSColor clearColor]; //控件背景色
+        _promptLabel.textColor = [NSColor blackColor];  //文字颜色
+        _promptLabel.alignment = NSTextAlignmentCenter; //水平显示方式
+        _promptLabel.maximumNumberOfLines = 2; //最多显示行数
+        _promptLabel.font = [NSFont systemFontOfSize:34];//设置字号大小
+//        [_promptLabel sizeToFit];////自适应大小(改变label的宽度,使其刚刚好可以容纳字符)
+    }
+    return _promptLabel;
+}
+
